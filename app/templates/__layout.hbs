@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<head>
+    <title>Website</title>
+    <meta charset="utf-8"/>
+    {{#each locals.meta}}
+        {{{metaTags @key this}}}
+    {{/each}}
+    <link rel="stylesheet" href="/css/site.min.css"/>
+    <script src="/js/site.min.js"></script>
+</head>
+<body>
+<h1>Website</h1>
+<div>Welcome to the website!</div>
+<section id="content">
+    {{{body}}}
+</section>
+<script>!function(){var a=window.App=new(require("app/app"))({{json appData}})
+a.bootstrapData({{json bootstrappedData}}),a.start()}()</script>
+</body>
+</html>

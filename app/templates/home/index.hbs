@@ -1,0 +1,8 @@
+<div>It is <span>{{time.attributes.time}}</span></div>
+<div>Users on the system:</div>
+<ul>
+{{#each users.models}}
+    <li>{{attributes.name}}</li>
+{{/each}}
+</ul>
+<div><a href="/page">Visit the page</a></div>

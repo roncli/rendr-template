@@ -26,3 +26,12 @@ node_modules
 
 # Users Environment Variables
 .lock-wscript
+
+# PHP Storm
+.idea
+
+# Grunt
+### Grunt ###
+compiledTemplates.js
+*.min.*
+grunt_work
