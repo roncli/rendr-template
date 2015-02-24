@@ -25,6 +25,7 @@ Status
 This is the list of direct package dependencies that have yet to be upgraded to the latest version, along with the reasons why they are not upgraded.  If an outdated package is not listed here, I simply haven't gotten around to looking at it yet.
 
 * remapify / grunt-browserify - Attempting to upgrade grunt-browserify from 2.1.4 to 3.2.9 and remapify from 1.4.3 to 1.4.4.  remapify is a browserify plugin that does not run synchronously, however grunt-browserify>=3.0.0 expects plugins to run synchronously.  See joeybaker/remapify#26 for a discussion on this issue. 
+* handlebars / grunt-contrib-handlebars - Attempting to upgrade handlebars from 1.3.0 to 3.0.0 and grunt-contrib-handlebars from 0.8.0 to 0.9.3.  handlebars@3.0.0 breaks API compatibility with other modules that don't use the 3.0.0 API.  rendr-handlebars@0.2.4 is currently using the 1.3.0 API and grunt-contrib-handlebars@0.9.3 is currently using the 2.0.0 API, which means that we cannot yet upgrade handlebars past the lowest common API, which is 1.3.0.  See gruntjs/grunt-contrib-handlebars#136 and rendrjs/rendr-handlebars#36 for discussions on this issue. 
 * errorhandler - This is not the final error handler, as it's meant for development only.  I will look into getting a more production-ready error handler.
 
 Got Better?
