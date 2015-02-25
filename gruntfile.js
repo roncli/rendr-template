@@ -67,32 +67,22 @@ module.exports = function(grunt) {
             combine_main_js_files: {
                 options: {
                     require: Object.keys(pjson.browser),
-                    //preBundleCB: function(b) {
-                    //    b.on("remapify:files", function(file, expandedAliases) {
-                    //        Object.keys(expandedAliases).forEach(function(key) {
-                    //            if (key.indexOf(".js") === -1 && key.indexOf("\\") === -1) {
-                    //                b.require(path.resolve(expandedAliases[key]), {expose: key});
-                    //            }
-                    //        });
-                    //    });
-                    //    b.plugin(remapify,
-                    //        {
-                    //            cwd: "./app",
-                    //            src: "**/*.js",
-                    //            expose: "app"
-                    //        }
-                    //    );
-                    //}
                     plugin: [
                         [pathmodify, {mods: [
                             function(rec) {
-                                var index = rec.id.indexOf(currentDir);
-                                if (index === 0) {
-                                    var a = {
+                                if (/^app\//.test(rec.id)) {
+                                    return {
+                                        id: path.join(currentDir, rec.id),
+                                        expose: rec.id
+                                    };
+                                    return a;
+                                }
+
+                                if (rec.id.indexOf(currentDir) === 0) {
+                                    return {
                                         id: rec.id,
                                         expose: rec.id.substr(currentDir.length + 1).replace(/\\/g, "/").replace(/\.js$/, "")
                                     };
-                                    return a;
                                 }
                                 return {};
                             }

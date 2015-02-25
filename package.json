@@ -29,8 +29,7 @@
         "grunt-contrib-uglify": "0.8.0",
         "grunt-execute": "0.2.2",
         "html-minifier": "0.7.0",
-        "pathmodify": "0.1.0",
-        "remapify": "1.4.3"
+        "pathmodify": "0.1.0"
     },
     "license": "None",
     "engines": {
