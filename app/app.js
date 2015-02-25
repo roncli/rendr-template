@@ -1,6 +1,5 @@
 var BaseApp = require("rendr/shared/app"),
-    handlebarsHelpers = require("./lib/handlebarsHelpers"),
-    $ = require("jquery");
+    handlebarsHelpers = require("./lib/handlebarsHelpers");
 
 // Extend the BaseApp class, adding any custom methods or overrides.
 module.exports = BaseApp.extend({
