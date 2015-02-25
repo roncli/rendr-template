@@ -1,7 +1,9 @@
 var path = require("path"),
+    pathmodify = require("pathmodify"),
     remapify = require("remapify"),
     pjson = require("./package.json"),
     minifier = require("html-minifier"),
+    currentDir = path.resolve("."),
 
     /**
      * Minify HTML content
@@ -65,22 +67,37 @@ module.exports = function(grunt) {
             combine_main_js_files: {
                 options: {
                     require: Object.keys(pjson.browser),
-                    preBundleCB: function(b) {
-                        b.on("remapify:files", function(file, expandedAliases) {
-                            Object.keys(expandedAliases).forEach(function(key) {
-                                if (key.indexOf(".js") === -1 && key.indexOf("\\") === -1) {
-                                    b.require(path.resolve(expandedAliases[key]), {expose: key});
+                    //preBundleCB: function(b) {
+                    //    b.on("remapify:files", function(file, expandedAliases) {
+                    //        Object.keys(expandedAliases).forEach(function(key) {
+                    //            if (key.indexOf(".js") === -1 && key.indexOf("\\") === -1) {
+                    //                b.require(path.resolve(expandedAliases[key]), {expose: key});
+                    //            }
+                    //        });
+                    //    });
+                    //    b.plugin(remapify,
+                    //        {
+                    //            cwd: "./app",
+                    //            src: "**/*.js",
+                    //            expose: "app"
+                    //        }
+                    //    );
+                    //}
+                    plugin: [
+                        [pathmodify, {mods: [
+                            function(rec) {
+                                var index = rec.id.indexOf(currentDir);
+                                if (index === 0) {
+                                    var a = {
+                                        id: rec.id,
+                                        expose: rec.id.substr(currentDir.length + 1).replace(/\\/g, "/").replace(/\.js$/, "")
+                                    };
+                                    return a;
                                 }
-                            });
-                        });
-                        b.plugin(remapify,
-                            {
-                                cwd: "./app",
-                                src: "**/*.js",
-                                expose: "app"
+                                return {};
                             }
-                        );
-                    }
+                        ]}]
+                    ]
                 },
                 files: {
                     "grunt_work/js/site.js": ["app/**/*.js"]
