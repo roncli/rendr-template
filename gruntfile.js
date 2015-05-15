@@ -63,6 +63,7 @@ module.exports = function(grunt) {
         // Setup browserify to send node assets to the client.
         browserify: {
             combine_main_js_files: {
+                alias: ["./node_modules/handlebars/runtime.js:handlebars"],
                 options: {
                     require: Object.keys(pjson.browser),
                     preBundleCB: function(b) {
