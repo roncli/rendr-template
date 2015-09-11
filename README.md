@@ -16,8 +16,9 @@ Installing
 ==========
 
 1. Clone into a directory of your liking.
-2. Run `npm install` to install all of the dependencies.
-3. Run `grunt all` to compile and run the application.
+2. Run `npm install -g grunt-cli` to install the grunt client.  In Windows, this must be done from an admin command prompt.
+3. Run `npm install` to install all of the dependencies.
+4. Run `grunt all` to compile and run the application.
 
 Status
 ======

@@ -31,9 +31,9 @@
         "html-minifier": "0.7.2",
         "remapify": "2.0.2"
     },
-    "license": "None",
+    "license": "MIT",
     "engines": {
-        "node": ">=0.12.4"
+        "node": ">=4.0.0"
     },
     "browser": {
         "jquery": "./node_modules/jquery/dist/jquery.min.js",
