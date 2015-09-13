@@ -34,7 +34,7 @@ module.exports = function(grunt) {
         handlebars: {
             compile_main_templates: {
                 options: {
-                    namespace: false,
+                    namespace: "default",
                     commonjs: true,
                     processContent: minifyHtml,
 
