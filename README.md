@@ -25,7 +25,6 @@ Status
 
 This is the list of direct package dependencies that have yet to be upgraded to the latest version or are not final, along with the reasons why they are not upgraded.  If an outdated package is not listed here, I simply haven't gotten around to looking at it yet.
 
-* handlebars - The sole reason for the reference to handlebars is for rendr-handlebars, which no longer has a hard dependency on any specific handlebars version.  However, grunt-contrib-handlebars@0.10.2 depends on handlebars@3.0.3, and attempting to upgrade handlebars to the latest version breaks API compatibility.  See gruntjs/grunt-contrib-handlebars#150 for the issue filed with the project. 
 * errorhandler - This is not the final error handler, as it's meant for development only.  I will look into getting a more production-ready error handler.
 
 Got Better?
