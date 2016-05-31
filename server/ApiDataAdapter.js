@@ -60,6 +60,7 @@ ApiDataAdapter.prototype.request = function(req, api, options, callback) {
                         console.log("Unknown server error.");
                         console.log(err);
                         console.log(err.stack);
+                        console.log(req);
                         req.res.status(500);
                         callback(null, req.res, {error: "Unknown server error."});
                     } catch (err2) {

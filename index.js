@@ -9,25 +9,13 @@ var express = require("express"),
     bodyParser = require("body-parser"),
     app = express(),
     ApiDataAdapter = require("./server/ApiDataAdapter"),
+    errorHandler = require("./server/errorHandler"),
     server = rendr.createServer({
         dataAdapter: new ApiDataAdapter(),
-        errorHandler: require("errorhandler")
+        errorHandler: errorHandler
     });
 
 // Initialize middleware stack.
-app.use(compression());
-app.use(morgan("[:date] :remote-addr :method :url HTTP/:http-version :status :res[content-length] \":user-agent\" :response-time \":referrer\""));
-app.use(cookieParser("tmp"));
-app.use(session({
-    secret: "tmp",
-    resave: false,
-    saveUninitialized: true
-}));
-app.use(express.static(path.join(__dirname, "public")));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-
-// Setup domains.
 app.use(function(req, res, next) {
     "use strict";
 
@@ -42,11 +30,23 @@ app.use(function(req, res, next) {
     d.on("error", function(err) {
         console.log("Domain error");
         console.log(err);
-        next(err);
     });
 
     d.run(next);
 });
+
+app.use(errorHandler);
+app.use(compression());
+app.use(morgan("[:date] :remote-addr :method :url HTTP/:http-version :status :res[content-length] \":user-agent\" :response-time \":referrer\""));
+app.use(cookieParser("tmp"));
+app.use(session({
+    secret: "tmp",
+    resave: false,
+    saveUninitialized: true
+}));
+app.use(express.static(path.join(__dirname, "public")));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 // Add the rendr server.
 app.use(server.handle);
