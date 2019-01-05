@@ -1,5 +1,4 @@
 var express = require("express"),
-    domain = require("domain"),
     path = require("path"),
     rendr = require("rendr"),
     compression = require("compression"),
@@ -14,26 +13,6 @@ var express = require("express"),
         dataAdapter: new ApiDataAdapter(),
         errorHandler: errorHandler
     });
-
-// Initialize middleware stack.
-app.use(function(req, res, next) {
-    "use strict";
-
-    var d = domain.create();
-    d.add(req);
-    d.add(res);
-
-    res.on("close", function() {
-        d.dispose();
-    });
-
-    d.on("error", function(err) {
-        console.log("Domain error");
-        console.log(err);
-    });
-
-    d.run(next);
-});
 
 app.use(errorHandler);
 app.use(compression());

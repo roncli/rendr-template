@@ -1,7 +1,6 @@
 var DataAdapter = require("rendr/server/data_adapter"),
     fs = require("fs"),
-    util = require("util"),
-    domain = require("domain");
+    util = require("util");
 
 /**
  * Creates an instance of the API Data Adapter.
@@ -41,8 +40,7 @@ ApiDataAdapter.prototype.request = function(req, api, options, callback) {
 
     // Check to ensure the API being requested exists.
     fs.exists(filename.replace(".", __dirname), function(exists) {
-        var parentDomain = process.domain,
-            script, method, d;
+        var script, method, d;
 
         if (exists) {
             // Check to ensure the method on the API exists.
@@ -53,9 +51,12 @@ ApiDataAdapter.prototype.request = function(req, api, options, callback) {
                 // Call the API from within a domain.
                 req.parsedPath = path.slice(2);
 
-                d = domain.create();
-
-                d.once("error", function(err) {
+                try {
+                    // Run the API and send the response through the callback.
+                    script[method](req, function(json) {
+                        callback(null, req.res, json);
+                    });
+                } catch (err) {
                     try {
                         console.log("Unknown server error.");
                         console.log(err);
@@ -66,15 +67,7 @@ ApiDataAdapter.prototype.request = function(req, api, options, callback) {
                         console.log("Error sending 500.");
                         console.log(err2);
                     }
-                    parentDomain.emit("error", err);
-                });
-
-                d.run(function() {
-                    // Run the API and send the response through the callback.
-                    script[method](req, function(json) {
-                        callback(null, req.res, json);
-                    });
-                });
+                }
             } else {
                 // Return a 405 when the method does not exist on an API.
                 req.res.status(405);
